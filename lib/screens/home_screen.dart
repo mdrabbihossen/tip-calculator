@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tips_calculator/constants/constant.dart';
+import 'package:tips_calculator/widgets/custom_textfield.dart';
 
 import 'package:tips_calculator/widgets/tips_item.dart';
 
@@ -55,58 +57,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: Text(
                       'Bill',
-                      style: GoogleFonts.inconsolata(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xff5b777b),
-                      ),
+                      style: textStyle,
                     ),
                   ),
                   // bill input
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 30,
-                      vertical: 10,
-                    ),
-                    child: Container(
-                      width: double.infinity,
-                      height: size.height * 0.08,
-                      decoration: BoxDecoration(
-                        color: Color(0xffe8f0f1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        textAlign: TextAlign.end,
-                        cursorHeight: 30,
-                        style: GoogleFonts.inconsolata(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xff5b777b),
-                        ),
-                        cursorColor: Color(0xff5b777b),
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(20),
-                          border: InputBorder.none,
-                          hintText: '0.00',
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.only(
-                              left: 20,
-                              right: 10,
-                            ),
-                            child: SvgPicture.asset(
-                              'assets/images/icon-dollar.svg',
-                              width: size.width * 0.04,
-                            ),
-                          ),
-                          hintStyle: GoogleFonts.inconsolata(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xff5b777b),
-                          ),
-                        ),
-                      ),
-                    ),
+                  customTextField(
+                    textFieldHeight: size.height * 0.08,
+                    imageWidth: size.width * 0.04,
+                    prefixImage: 'assets/images/icon-dollar.svg',
+                    hintText: '0.00',
                   ),
                   SizedBox(height: 10),
                   // select tip title
@@ -115,11 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         EdgeInsets.symmetric(horizontal: size.width * 0.08),
                     child: Text(
                       'Select Tip %',
-                      style: GoogleFonts.inconsolata(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xff5b777b),
-                      ),
+                      style: textStyle,
                     ),
                   ),
                   SizedBox(height: 16),
@@ -191,7 +146,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                  )
+                  ),
+                  SizedBox(height: 20),
+                  // number of people
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: size.width * 0.08,
+                    ),
+                    child: Text(
+                      'Number of People',
+                      style: textStyle,
+                    ),
+                  ),
                 ],
               ),
             ),
