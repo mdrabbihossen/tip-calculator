@@ -287,7 +287,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(height: 20),
                         // reset button
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              billAmount = 0;
+                              tipAmount = 0;
+                              person = 1;
+                              tipPerPerson = 0;
+                              totalPerPerson = 0;
+                              billAmountController.clear();
+                              tipAmountController.clear();
+                              personController.clear();
+                            });
+                          },
                           style: ElevatedButton.styleFrom(
                             elevation: 0,
                             primary: Color(0xff26C2AD),
