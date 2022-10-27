@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:tips_calculator/constants/constant.dart';
+import 'package:tips_calculator/widgets/custom_list_tile.dart';
 import 'package:tips_calculator/widgets/custom_textfield.dart';
 
 import 'package:tips_calculator/widgets/tips_item.dart';
@@ -37,7 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
             // tips items and calculation
             Container(
               width: double.infinity,
-              height: size.height * 0.72,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -147,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 30),
                   // number of people
                   Padding(
                     padding: EdgeInsets.symmetric(
@@ -158,6 +158,62 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: textStyle,
                     ),
                   ),
+                  // number of people input
+                  customTextField(
+                    textFieldHeight: size.height * 0.08,
+                    imageWidth: size.width * 0.04,
+                    prefixImage: 'assets/images/icon-person.svg',
+                    hintText: '5',
+                  ),
+                  SizedBox(height: 20),
+                  // calculate container
+                  Container(
+                    width: double.infinity,
+                    margin: EdgeInsets.symmetric(
+                      horizontal: size.width * 0.06,
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: size.width * 0.06,
+                      vertical: size.height * 0.02,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Color(0xff00474f),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      children: [
+                        customListTile(
+                          listTitle: 'Tip Amount',
+                          listSubtitle: '/ person',
+                          listTrailing: '\$4.27',
+                        ),
+                        customListTile(
+                          listTitle: 'Total',
+                          listSubtitle: '/ person',
+                          listTrailing: '\$32.79',
+                        ),
+                        SizedBox(height: 20),
+                        // reset button
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            primary: Color(0xff26C2AD),
+                            minimumSize:
+                                Size(double.infinity, size.height * 0.07),
+                          ),
+                          child: Text(
+                            'RESET',
+                            style: textStyle.copyWith(
+                              color: Color(0xff075553),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
                 ],
               ),
             ),
