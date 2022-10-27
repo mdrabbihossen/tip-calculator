@@ -15,7 +15,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool isSelected = false;
+  // declare the variables and controller
+  double billAmount = 0;
+  double tipAmount = 0;
+  int person = 1;
+  TextEditingController billAmountController = TextEditingController();
+  TextEditingController tipAmountController = TextEditingController();
+  TextEditingController personController = TextEditingController();
+
+  // prepare the result
+  double tipPerPerson = 0;
+  double totalPerPerson = 0;
+
+  void calculate() {
+    tipPerPerson = (billAmount * tipAmount) / person;
+    totalPerPerson = (billAmount * (1 + tipAmount)) / person;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +77,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   // bill input
                   customTextField(
+                    controller: billAmountController,
+                    onEditingComplete: () {
+                      setState(() {
+                        if (billAmountController.text.isNotEmpty) {
+                          billAmount = double.parse(billAmountController.text);
+                        } else {
+                          billAmount = 0;
+                        }
+                        // dismiss the keyboard
+                        FocusScope.of(context).unfocus();
+                        calculate();
+                      });
+                    },
                     textFieldHeight: size.height * 0.08,
                     imageWidth: size.width * 0.04,
                     prefixImage: 'assets/images/icon-dollar.svg',
@@ -88,6 +116,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Expanded(
                               child: tipsItem(
+                                onPress: () {
+                                  setState(() {
+                                    tipAmount = 0.05;
+                                    calculate();
+                                  });
+                                },
                                 tipsText: '5%',
                                 color: Color(0xff00474f),
                                 context: context,
@@ -96,6 +130,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(width: 15),
                             Expanded(
                               child: tipsItem(
+                                onPress: () {
+                                  setState(() {
+                                    tipAmount = 0.10;
+                                    calculate();
+                                  });
+                                },
                                 tipsText: '10%',
                                 color: Color(0xff00474f),
                                 context: context,
@@ -108,6 +148,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Expanded(
                               child: tipsItem(
+                                onPress: () {
+                                  setState(() {
+                                    tipAmount = 0.15;
+                                    calculate();
+                                  });
+                                },
                                 tipsText: '15%',
                                 color: Color(0xff00474f),
                                 context: context,
@@ -116,6 +162,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(width: 15),
                             Expanded(
                               child: tipsItem(
+                                onPress: () {
+                                  setState(() {
+                                    tipAmount = 0.25;
+                                    calculate();
+                                  });
+                                },
                                 tipsText: '25%',
                                 color: Color(0xff00474f),
                                 context: context,
@@ -128,6 +180,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Expanded(
                               child: tipsItem(
+                                onPress: () {
+                                  setState(() {
+                                    tipAmount = 0.50;
+                                    calculate();
+                                  });
+                                },
                                 tipsText: '50%',
                                 color: Color(0xff00474f),
                                 context: context,
@@ -135,13 +193,33 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             SizedBox(width: 15),
                             Expanded(
-                              child: tipsItem(
-                                tipsText: 'Custom',
-                                color: Color(0xffF3F8FB),
-                                context: context,
-                                textColor: Color(0xff5b777b),
+                                child: TextField(
+                              onEditingComplete: () {
+                                setState(() {
+                                  if (tipAmountController.text.isNotEmpty) {
+                                    tipAmount =
+                                        double.parse(tipAmountController.text) /
+                                            100;
+                                  } else {
+                                    tipAmount = 0;
+                                  }
+                                  // dismiss the keyboard
+                                  FocusScope.of(context).unfocus();
+                                  calculate();
+                                });
+                              },
+                              controller: tipAmountController,
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color(0xfff3f8fb),
+                                border: InputBorder.none,
+                                hintText: 'Custom',
+                                hintStyle: textStyle.copyWith(
+                                  color: Color(0xff00474f),
+                                ),
                               ),
-                            ),
+                            ))
                           ],
                         ),
                       ],
@@ -160,6 +238,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   // number of people input
                   customTextField(
+                    controller: personController,
+                    onEditingComplete: () {
+                      setState(() {
+                        if (personController.text.isNotEmpty) {
+                          person = int.parse(personController.text);
+                        } else {
+                          person = 1;
+                        }
+                        // dismiss the keyboard
+                        FocusScope.of(context).unfocus();
+                        calculate();
+                      });
+                    },
                     textFieldHeight: size.height * 0.08,
                     imageWidth: size.width * 0.04,
                     prefixImage: 'assets/images/icon-person.svg',
@@ -185,12 +276,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         customListTile(
                           listTitle: 'Tip Amount',
                           listSubtitle: '/ person',
-                          listTrailing: '\$4.27',
+                          listTrailing: '\$${tipPerPerson.toStringAsFixed(2)}',
                         ),
                         customListTile(
                           listTitle: 'Total',
                           listSubtitle: '/ person',
-                          listTrailing: '\$32.79',
+                          listTrailing:
+                              '\$${totalPerPerson.toStringAsFixed(2)}',
                         ),
                         SizedBox(height: 20),
                         // reset button

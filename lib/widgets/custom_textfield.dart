@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:tips_calculator/constants/constant.dart';
 
 Widget customTextField({
@@ -8,6 +8,8 @@ Widget customTextField({
   required double imageWidth,
   required String prefixImage,
   required String hintText,
+  required TextEditingController controller,
+  VoidCallback? onEditingComplete,
 }) =>
     Padding(
       padding: EdgeInsets.symmetric(
@@ -16,14 +18,15 @@ Widget customTextField({
       ),
       child: Container(
         width: double.infinity,
-
         height: textFieldHeight,
         decoration: BoxDecoration(
           color: Color(0xffe8f0f1),
           borderRadius: BorderRadius.circular(10),
         ),
         child: TextField(
-          keyboardType: TextInputType.number,
+          controller: controller,
+          onEditingComplete: onEditingComplete,
+          keyboardType: TextInputType.numberWithOptions(),
           textAlign: TextAlign.end,
           cursorHeight: 30,
           style: textStyle.copyWith(
@@ -35,7 +38,7 @@ Widget customTextField({
             border: InputBorder.none,
             hintText: hintText,
             prefixIcon: Padding(
-              padding:  EdgeInsets.only(
+              padding: EdgeInsets.only(
                 left: 20,
                 right: 10,
               ),
