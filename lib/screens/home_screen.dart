@@ -205,7 +205,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text(
                             'RESET',
                             style: textStyle.copyWith(
-                              color: Color(0xff075553),
+                              color: Color(0xff00494b),
+                              letterSpacing: 1.2,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
